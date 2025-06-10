@@ -27,7 +27,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     
     private func doSetup(on window: NSWindow) {
-        print("made it here")
         window.standardWindowButton(.closeButton)?.isHidden = true;
         window.standardWindowButton(.zoomButton)?.isHidden = true;
         window.standardWindowButton(.miniaturizeButton)?.isHidden = true;
@@ -48,6 +47,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         window.backgroundColor = .clear
         window.styleMask = [.borderless]
         window.hasShadow = false
+        window.animationBehavior = .none
         
         if let screen = window.screen ?? NSScreen.main {
             window.setFrame(screen.frame, display: true)

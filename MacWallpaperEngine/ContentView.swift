@@ -18,14 +18,26 @@ struct NoControlsPlayerView: NSViewRepresentable {
 }
 
 struct ContentView: View {
-    let player = AVPlayer(url: URL(string:
-      "https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/720/Big_Buck_Bunny_720_10s_5MB.mp4"
-    )!)
+    //let fileURL = URL(fileURLWithPath: "/Users/ced/Downloads/wallpaper.mp4")
+    let player = AVPlayer(url: URL(fileURLWithPath: "/Users/ced/Downloads/wallpaper.mp4"))
+    
 
     var body: some View {
+        //AsyncImage(url: URL(string: "https://512pixels.net/downloads/macos-wallpapers-6k/10-6-6k.jpg"))
         NoControlsPlayerView(player: player)
           .ignoresSafeArea()
-          .onAppear { player.play() }
-          .navigationTitle("balls")
+          .onAppear {
+              player.play()
+              
+              NotificationCenter.default.addObserver(
+                            forName: .AVPlayerItemDidPlayToEndTime,
+                            object: nil,
+                            queue: nil
+                          ) { _ in
+                              player.seek(to: CMTime.zero)
+                            player.play()
+                          }
+              
+          }
     }
 }
